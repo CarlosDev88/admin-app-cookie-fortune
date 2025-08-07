@@ -1,0 +1,9 @@
+{
+  "admin-example.navigation.label-group": "Admin de exemplo",
+ "admin-cookies.navigation.label-table": "Galletas de la Fortuna",
+  "admin-example.navigation.search.kws": "teste, mock, fake",
+  "admin-example.navigation.details.search.kws": "detalhe, mock, test, oi",
+  "admin-example.navigation.table.search.kws": "tabela, mock, test, tchau",
+  "admin-cookies.title-table": "Galletas de la Fortuna",
+  "admin-example.details": "Admin detalhes"
+}
