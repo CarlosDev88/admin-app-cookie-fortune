@@ -6,3 +6,45 @@ body,
 .render-provider {
   height: 100%;
 }
+
+.deleteModal {
+  background-color: #FFF7E0;
+  padding: 30px 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: 200px;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.deleteModal__text h3 {
+  color: #8B5E3C;
+  margin: 0;
+}
+
+.deleteModal__text p {
+  color: #5C4033;
+  margin-top: 8px;
+}
+
+.deleteModal__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.deleteModal__buttons .vtex-button:first-child {
+  background-color: #EAD7B7;
+  color: #8B5E3C;
+  border: none;
+}
+
+.deleteModal__buttons .vtex-button:last-child {
+  background-color: #D9534F;
+  color: #fff;
+  border: none;
+}
