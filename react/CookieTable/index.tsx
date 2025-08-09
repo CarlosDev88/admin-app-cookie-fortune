@@ -42,7 +42,7 @@ const HookWrapper: React.FC<{
   return <>{children({ createHook, deleteHook, fetchHook, searchHook })}</>
 }
 
-class UsersTable extends Component<Props, State> {
+class CookieTable extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -157,4 +157,4 @@ class UsersTable extends Component<Props, State> {
   }
 }
 
-export default withRuntimeContext(withToast(UsersTable))
+export default withRuntimeContext(withToast(CookieTable))

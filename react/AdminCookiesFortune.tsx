@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Layout, PageBlock, PageHeader } from 'vtex.styleguide'
-
-import UsersTable from './UsersTable'
+import CookieTable from './CookieTable'
 
 import './styles.global.css'
+
 
 const AdminCookiesFortune: FC = () => {
   return (
@@ -16,7 +16,7 @@ const AdminCookiesFortune: FC = () => {
       }
     >
       <PageBlock variation="full">
-        <UsersTable />
+        <CookieTable />
       </PageBlock>
     </Layout>
   )
