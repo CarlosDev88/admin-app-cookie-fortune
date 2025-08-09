@@ -46,15 +46,12 @@ export const useCreatePhrase = (): CreatePhraseHookReturn => {
       const newPhraseObject = await response.json()
       console.log('Created item response:', newPhraseObject)
 
-      // Llamar al callback de éxito
       onSuccess(newPhraseObject)
 
-      // Limpiar el estado
       setModalOpen(false)
       setNewPhrase('')
       setCreating(false)
 
-      // Mostrar toast de éxito
       showToast({
         message: '🥠 Frase creada con éxito',
         duration: 5000,

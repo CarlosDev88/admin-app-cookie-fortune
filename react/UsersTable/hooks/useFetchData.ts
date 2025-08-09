@@ -47,22 +47,21 @@ export const useFetchData = (
     }
   }
 
-  // Función para refrescar los datos manualmente
+
   const refetch = async (): Promise<void> => {
     await fetchData()
   }
 
-  // Función para agregar un item sin hacer fetch
+
   const addItem = (newItem: any): void => {
     setItems(prevItems => [...prevItems, newItem])
   }
 
-  // Función para remover un item sin hacer fetch
+
   const removeItem = (itemId: string): void => {
     setItems(prevItems => prevItems.filter(item => item.id !== itemId))
   }
 
-  // Fetch inicial cuando el hook se monta
   useEffect(() => {
     fetchData()
   }, [])

@@ -33,15 +33,12 @@ export const useDeletePhrase = (): DeletePhraseHookReturn => {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      // Llamar al callback de éxito
       onSuccess(itemToDelete)
 
-      // Limpiar el estado
       setConfirmDeleteOpen(false)
       setItemToDelete(null)
       setDeleting(false)
 
-      // Mostrar toast de éxito
       showToast({
         message: `🗑️ Frase eliminada exitosamente`,
         duration: 5000,

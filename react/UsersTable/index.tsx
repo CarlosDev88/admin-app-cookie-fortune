@@ -9,6 +9,7 @@ import { withRuntimeContext } from 'vtex.render-runtime'
 import { useCreatePhrase } from './hooks/useCreatePhrase'
 import { useDeletePhrase } from './hooks/useDeletePhrase'
 import { useFetchData } from './hooks/useFetchData'
+import { useSearch } from './hooks/useSearch'
 import CreatePhraseModal from './components/CreatePhraseModal'
 import DeleteConfirmationModal from './components/DeleteConfirmationModal'
 import TableHeader from './components/TableHeader'
@@ -20,7 +21,6 @@ interface Props {
 
 interface State {
   tableDensity: string
-  searchValue: string | null
   filterStatements: any[]
 }
 
@@ -31,13 +31,15 @@ const HookWrapper: React.FC<{
     createHook: ReturnType<typeof useCreatePhrase>
     deleteHook: ReturnType<typeof useDeletePhrase>
     fetchHook: ReturnType<typeof useFetchData>
+    searchHook: ReturnType<typeof useSearch>
   }) => React.ReactNode
 }> = ({ children, showToast }) => {
   const createHook = useCreatePhrase()
   const deleteHook = useDeletePhrase()
   const fetchHook = useFetchData(showToast)
+  const searchHook = useSearch(fetchHook.items)
 
-  return <>{children({ createHook, deleteHook, fetchHook })}</>
+  return <>{children({ createHook, deleteHook, fetchHook, searchHook })}</>
 }
 
 class UsersTable extends Component<Props, State> {
@@ -45,7 +47,6 @@ class UsersTable extends Component<Props, State> {
     super(props)
     this.state = {
       tableDensity: 'low',
-      searchValue: null,
       filterStatements: [],
     }
   }
@@ -76,11 +77,11 @@ class UsersTable extends Component<Props, State> {
   }
 
   render() {
-    const { tableDensity, searchValue } = this.state
+    const { tableDensity } = this.state
 
     return (
       <HookWrapper showToast={this.props.showToast}>
-        {({ createHook, deleteHook, fetchHook }) => (
+        {({ createHook, deleteHook, fetchHook, searchHook }) => (
           <div>
             <TableHeader
               onAddPhrase={() => createHook.setModalOpen(true)}
@@ -88,8 +89,8 @@ class UsersTable extends Component<Props, State> {
 
             <Table
               fullWidth
-              updateTableKey={`${tableDensity}-${fetchHook.items.length}`}
-              items={fetchHook.items}
+              updateTableKey={`${tableDensity}-${searchHook.filteredItems.length}`}
+              items={searchHook.filteredItems}
               schema={this.getSchema(deleteHook.openDeleteConfirmation)}
               density={tableDensity as any}
               loading={fetchHook.loading}
@@ -103,18 +104,22 @@ class UsersTable extends Component<Props, State> {
                     this.setState({ tableDensity: density }),
                 },
                 inputSearch: {
-                  value: searchValue,
+                  value: searchHook.searchValue || '',
                   placeholder: 'Buscar frase...',
-                  onChange: (value: string) =>
-                    this.setState({ searchValue: value }),
-                  onClear: () => this.setState({ searchValue: null }),
-                  onSubmit: () => {},
+                  onChange: searchHook.setSearchValue,
+                  onClear: searchHook.clearSearch,
+                  onSubmit: searchHook.handleSearchSubmit,
                 },
               }}
               totalizers={[
                 {
                   label: 'Total de frases',
                   value: fetchHook.items.length.toString(),
+                  icon: <IconShoppingCart size={14} />,
+                },
+                {
+                  label: 'Frases mostradas',
+                  value: searchHook.filteredItems.length.toString(),
                   icon: <IconShoppingCart size={14} />,
                 },
               ]}
