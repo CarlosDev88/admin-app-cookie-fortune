@@ -21,16 +21,17 @@ export const useFetchData = (
       setLoading(true)
       setError(null)
 
-      const response = await fetch(`/_v/fortune-cookies?_t=${Date.now()}`)
+      const response = await fetch(`/_v/fortune-cookies`)
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
       const json = await response.json()
-      console.log('Fetched data:', json)
 
-      const fetchedItems = Array.isArray(json) ? json : (json.data?.ok || json.data || [])
+      const fetchedItems = Array.isArray(json)
+        ? json
+        : json.data?.ok || json.data || []
       setItems(fetchedItems)
       setLoading(false)
     } catch (fetchError) {
@@ -47,19 +48,16 @@ export const useFetchData = (
     }
   }
 
-
   const refetch = async (): Promise<void> => {
     await fetchData()
   }
 
-
   const addItem = (newItem: any): void => {
-    setItems(prevItems => [...prevItems, newItem])
+    setItems((prevItems) => [...prevItems, newItem])
   }
 
-
   const removeItem = (itemId: string): void => {
-    setItems(prevItems => prevItems.filter(item => item.id !== itemId))
+    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId))
   }
 
   useEffect(() => {
